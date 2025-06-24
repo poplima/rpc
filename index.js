@@ -12,9 +12,9 @@ rpc.on("ready", () => {
     details: "Listening to Lo-Fi Beats",
     state: "Chill vibes 🎧",
     startTimestamp: new Date(),
-    largeImageKey: "lofi",        // Must match asset name uploaded on Discord dev portal
+    largeImageKey: "large",        // Must match asset name uploaded on Discord dev portal
     largeImageText: "Lo-Fi Girl",
-    smallImageKey: "headphones",  // Must match asset name uploaded on Discord dev portal
+    smallImageKey: "small",  // Must match asset name uploaded on Discord dev portal
     smallImageText: "Now Playing",
     buttons: [
       { label: "Listen on YouTube", url: "https://youtube.com/lofi" },
