@@ -1,27 +1,27 @@
-const { Client } = require("discord.js-selfbot-v13");
+const RPC = require("discord-rpc");
 require("dotenv").config();
-require("./server");
+require("./server"); // Keep-alive Express server
 
-const client = new Client();
+const clientId = process.env.APP_ID;
+const rpc = new RPC.Client({ transport: "ipc" });
 
-client.on("ready", () => {
-  console.log(`${client.user.username} is online.`);
+rpc.on("ready", () => {
+  console.log("RPC Ready");
 
-  client.user.setActivity({
-    name: "Lo-Fi Beats",
-    type: "LISTENING", // or PLAYING, WATCHING, CUSTOM
-    applicationId: process.env.APP_ID,
-    assets: {
-      largeImage: "lofi",        // name of your uploaded image asset
-      largeText: "Lo-Fi Vibes",  // tooltip on hover
-      smallImage: "headphones",  // optional
-      smallText: "Chill Music",
-    },
+  rpc.setActivity({
+    details: "Listening to Lo-Fi Beats",
+    state: "Chill vibes 🎧",
+    startTimestamp: new Date(),
+    largeImageKey: "lofi",        // Must match asset name uploaded on Discord dev portal
+    largeImageText: "Lo-Fi Girl",
+    smallImageKey: "headphones",  // Must match asset name uploaded on Discord dev portal
+    smallImageText: "Now Playing",
     buttons: [
-      { label: "Listen Now", url: "https://www.youtube.com/watch?v=jfKfPfyJRdk" },
-      { label: "Join Discord", url: "https://discord.gg/yourinvite" },
+      { label: "Listen on YouTube", url: "https://youtube.com/lofi" },
+      { label: "Join Discord", url: "https://discord.gg/yourserver" }
     ],
   });
+  console.log("Rich Presence set!");
 });
 
-client.login(process.env.TOKEN);
+rpc.login({ clientId }).catch(console.error);
