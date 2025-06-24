@@ -1,27 +1,12 @@
-const RPC = require("discord-rpc");
-require("dotenv").config();
-require("./server"); // Keep-alive Express server
+const { Client } = require('discord.js-selfbot-v13');
+require('dotenv').config();
 
-const clientId = process.env.APP_ID;
-const rpc = new RPC.Client({ transport: "ipc" });
+const client = new Client();
 
-rpc.on("ready", () => {
-  console.log("RPC Ready");
+client.once('ready', () => {
+  console.log(`Logged in as ${client.user.tag}`);
 
-  rpc.setActivity({
-    details: "Listening to Lo-Fi Beats",
-    state: "Chill vibes 🎧",
-    startTimestamp: new Date(),
-    largeImageKey: "large",        // Must match asset name uploaded on Discord dev portal
-    largeImageText: "Lo-Fi Girl",
-    smallImageKey: "small",  // Must match asset name uploaded on Discord dev portal
-    smallImageText: "Now Playing",
-    buttons: [
-      { label: "Listen on YouTube", url: "https://youtube.com/lofi" },
-      { label: "Join Discord", url: "https://discord.gg/yourserver" }
-    ],
-  });
-  console.log("Rich Presence set!");
+  client.user.setActivity("Lo-Fi Beats", { type: "LISTENING" });
 });
 
-rpc.login({ clientId }).catch(console.error);
+client.login(process.env.TOKEN);
